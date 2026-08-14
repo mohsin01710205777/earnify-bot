@@ -3,19 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Earnify Mini App</title>
+    <title>Earnify - ফ্রি টাকা ইনকাম</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background: #0f172a; color: #fff; margin-top: 50px; }
-        .card { background: #1e293b; padding: 20px; border-radius: 10px; display: inline-block; }
-        button { background: #22c55e; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; }
-        button:hover { background: #16a34a; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-z-width: 400px;
+            text-align: center;
+        }
+        .balance-card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        button {
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>স্বাগতম Earnify-তে!</h1>
-        <p>টাস্ক সম্পন্ন করুন এবং প্রতিদিন কয়েন ইনকাম করুন।</p>
-        <button onclick="alert('ক্লেম করা হয়েছে!')">Claim Bonus</button>
+
+    <div class="container">
+        <h2>স্বাগতম Earnify-তে!</h2>
+        
+        <!-- ব্যালেন্স শো করার কার্ড -->
+        <div class="balance-card">
+            <h3>আপনার ব্যালেন্স</h3>
+            <p id="balance" style="font-size: 24px; color: #22c55e; margin: 0;">0 কয়েন</p>
+        </div>
+
+        <!-- বোনাস সেকশন -->
+        <div class="card">
+            <h4>ডেইলি বোনাস</h4>
+            <p>প্রতিদিন একবার ফ্রি বোনাস ক্লেইম করুন।</p>
+            <button onclick="claimBonus()">Claim Bonus</button>
+        </div>
+
+        <!-- টাস্ক সেকশন -->
+        <div class="card">
+            <h4>টাস্ক কমপ্লিট করুন</h4>
+            <p>ভিডিও দেখে কয়েন আয় করুন।</p>
+            <button style="background-color: #3b82f6;" onclick="completeTask()">Watch & Earn</button>
+        </div>
     </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        let userBalance = 0;
+
+        function claimBonus() {
+            userBalance += 50;
+            updateBalance();
+            tg.showAlert('অভিনন্দন! আপনি ৫০ কয়েন বোনাস পেয়েছেন।');
+        }
+
+        function completeTask() {
+            userBalance += 20;
+            updateBalance();
+            tg.showAlert('টাস্ক সফল হয়েছে! ২০ কয়েন যোগ হয়েছে।');
+        }
+
+        function updateBalance() {
+            document.getElementById('balance').innerText = userBalance + ' কয়েন';
+        }
+    </script>
 </body>
 </html>
